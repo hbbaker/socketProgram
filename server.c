@@ -80,11 +80,8 @@ int main()
     }
 
     printf("Attempting to connect to Client 2\n");
-    clientAddr.sin_family = AF_INET;
-    clientAddr.sin_port = htons(3022);
-    clientAddr.sin_addr.s_addr = inet_addr("10.0.0.158");
 
-    if (connect(clientsock2, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1)
+    if (connect(serverSock, (struct sockaddr *)&clientAddr, &addrSize) == -1)
     {
         perror("Connection failed...");
         close(clientsock2);

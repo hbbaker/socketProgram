@@ -60,6 +60,10 @@ int main()
         close(serverSock);
         exit(-1);
     }
+    if (clientsock1 == 0)
+    {
+        printf("Connected to client1!");
+    }
 
     close(serverSock);
     printf("Closing Server...\n");

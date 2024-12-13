@@ -67,6 +67,34 @@ int main()
 
     close(clientsock1);
 
+    modData(&data);
+    printf("Updated Data from Client1:\n After -> Int: %d, Char: %c, Float: %.2f\n",
+           data.intValue, data.charValue, data.floatValue);
+
+    clientsock2 = socket(AF_INET, SOCK_STREAM, 0);
+    if (clientsock2 == -1)
+    {
+        perror("Client Socket creation failed...");
+        exit(-1);
+    }
+
+    printf("Attempting to connect to Client2");
+    clientAddr.sin_family = AF_INET;
+    clientAddr.sin_port = htons(8086);
+    clientAddr.sin_addr.s_addr = inet_addr("10.0.0.158");
+
+    if (connect(clientsock2, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1)
+    {
+        perror("Connection failed...");
+        close(clientsock2);
+        exit(-1);
+    }
+
+    send(clientsock2, &data, sizeof(data), 0);
+    printf("Data sent to Client2...\n");
+
+    close(clientsock2);
+
     close(serverSock);
     printf("Closing Server...\n");
 }

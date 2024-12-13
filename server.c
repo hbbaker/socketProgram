@@ -79,9 +79,9 @@ int main()
         exit(-1);
     }
 
-    printf("Attempting to connect to Client2");
+    printf("Attempting to connect to Client 2\n");
     clientAddr.sin_family = AF_INET;
-    clientAddr.sin_port = htons(8086);
+    clientAddr.sin_port = htons(3022);
     clientAddr.sin_addr.s_addr = inet_addr("10.0.0.158");
 
     if (connect(clientsock2, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1)
@@ -91,8 +91,8 @@ int main()
         exit(-1);
     }
 
-    send(clientsock2, &data, sizeof(data), 0);
     printf("Data sent to Client2...\n");
+    send(clientsock2, &data, sizeof(data), 0);
 
     close(clientsock2);
 

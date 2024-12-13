@@ -2,6 +2,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 typedef struct
 {
@@ -17,7 +19,7 @@ void modData(Data *data)
     data->floatValue += 1.0;
 }
 
-void main()
+int main()
 {
     int serverSock, clientsock1, clientsock2;
     struct sockaddr_in serverAddr, clientAddr;
@@ -35,7 +37,7 @@ void main()
     serverAddr.sin_port = htons(8080);
     serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    if (bind(serverSock, (struct sockaddr *)&serverAddr, sizeof(serverAddr) < 0))
+    if (bind(serverSock, (struct sockaddr *)&serverAddr, sizeof(struct sockaddr_in)) == -1)
     {
         perror("Binding failed");
         close(serverSock);
@@ -50,4 +52,15 @@ void main()
     }
 
     printf("Server running on port 8080...\n");
+
+    clientsock1 = accept(serverSock, (struct sockaddr *)&clientAddr, &addrSize);
+    if (clientsock1 == -1)
+    {
+        perror("Accept Client 1 Failed...");
+        close(serverSock);
+        exit(-1);
+    }
+
+    close(serverSock);
+    printf("Closing Server...\n");
 }

@@ -61,7 +61,11 @@ int main()
         exit(-1);
     }
 
-    printf("Connected to client1!");
+    recv(clientsock1, &data, sizeof(data), 0);
+    printf("Recieved Data from Client1:\n Before -> Int: %d, Char: %c, Float: %.2f\n",
+           data.intValue, data.charValue, data.floatValue);
+
+    close(clientsock1);
 
     close(serverSock);
     printf("Closing Server...\n");

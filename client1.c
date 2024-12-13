@@ -37,7 +37,10 @@ int main()
         exit(-1);
     }
 
-    printf("Connected to server!");
+    send(clientSock, &data, sizeof(data), 0);
+    printf("Data sent to server...\n");
 
     close(clientSock);
+
+    return 0;
 }

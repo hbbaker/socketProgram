@@ -38,7 +38,8 @@ int main()
     }
 
     recv(clientSock, &data, sizeof(data), 0);
-    printf("Recieved data from Server:\n Int: %d, Char: %c, Float: %.2f\n");
+    printf("Recieved data from Server:\n Int: %d, Char: %c, Float: %.2f\n",
+           data.intValue, data.charValue, data.floatValue);
 
     close(clientSock);
 

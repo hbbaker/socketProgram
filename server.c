@@ -72,16 +72,10 @@ int main()
     printf("Updated Data from Client1:\n After -> Int: %d, Char: %c, Float: %.2f\n",
            data.intValue, data.charValue, data.floatValue);
 
-    clientsock2 = socket(AF_INET, SOCK_STREAM, 0);
-    if (clientsock2 == -1)
-    {
-        perror("Client Socket creation failed...");
-        exit(-1);
-    }
-
     printf("Attempting to connect to Client 2\n");
+    clientsock2 = accept(serverSock, (struct sockaddr *)&clientAddr, &addrSize);
 
-    if (connect(serverSock, (struct sockaddr *)&clientAddr, &addrSize) == -1)
+    if (clientsock2 == -1)
     {
         perror("Connection failed...");
         close(clientsock2);
